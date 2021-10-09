@@ -12,6 +12,11 @@ pygame.init()
 screen = pygame.display.set_mode((int(576 / 2), int(1024 / 2)))
 clock = pygame.time.Clock()  # sets frame rate
 
+# game variables
+gravity = 0.25
+bird_movement = 0
+
+# surfaces
 bg_surface = pygame.image.load('assets/background-day.png').convert()
 floor_surface = pygame.image.load('assets/base.png').convert()
 floor_x_pos = 0
@@ -24,8 +29,16 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                bird_movement = 0
+                bird_movement -= 6
 
     screen.blit(bg_surface, (0, 0))
+
+    bird_movement += gravity
+    bird_rect.centery += bird_movement
+
     screen.blit(bird_surface, bird_rect)
     floor_x_pos -= 1
     draw_floor()
