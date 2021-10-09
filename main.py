@@ -78,9 +78,12 @@ game_font = pygame.font.Font('04B_19.ttf', 20)
 # game variables
 gravity = 0.2
 bird_movement = 0
-game_active = True
+game_active = False
+gameStart = True
 score = 0
-high_score = 0
+f = open('highScore', 'r')
+high_score = int(f.read())
+f.close()
 
 # surfaces
 bg_surface = pygame.image.load('assets/background-night.png').convert()
@@ -101,7 +104,7 @@ pygame.time.set_timer(BIRDFLAP, 200)
 pipe_surface = pygame.image.load('assets/pipe-red.png').convert()
 pipe_list = []
 SPAWNPIPE = pygame.USEREVENT
-pygame.time.set_timer(SPAWNPIPE, 1200)
+pygame.time.set_timer(SPAWNPIPE, 1200 - int(score))
 pipe_height = [200, 300, 400]
 
 game_over_surface = pygame.image.load('assets/gameover.png').convert_alpha()
@@ -115,6 +118,9 @@ score_countdown = 100
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            f = open('highScore', 'w')
+            f.write(str(high_score))
+            f.close()
             pygame.quit()
             sys.exit()
         if event.type == pygame.KEYDOWN:
@@ -124,6 +130,7 @@ while True:
                 flap_sound.play()
             if event.key == pygame.K_SPACE and game_active is False:
                 game_active = True
+                gameStart = False
                 pipe_list.clear()
                 bird_rect.center = (int(100 / 2), int(512 / 2))
                 bird_movement = 0
@@ -137,7 +144,11 @@ while True:
 
     screen.blit(bg_surface, (0, 0))
 
-    if game_active:
+    if gameStart and game_active is False:
+        game_start_surface = pygame.image.load('assets/message.png').convert_alpha()
+        game_start_rect = game_start_surface.get_rect(center=(144, 256))
+        screen.blit(game_start_surface, game_start_rect)
+    elif game_active:
         bird_movement += gravity
         rotated_bird = rotate_bird(bird_surface)
         bird_rect.centery += bird_movement
