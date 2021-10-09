@@ -1,3 +1,13 @@
+#!/usr/bin/env python
+
+__author__ = "Fateh Sandhu"
+__email__ = "fatehkaran@huskers.unl.edu"
+
+"""
+Flappy Bird created in PyGame
+twas' a fun little project
+"""
+
 import pygame
 import sys
 import random
