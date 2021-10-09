@@ -119,7 +119,7 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             f = open('highScore', 'w')
-            f.write(str(high_score))
+            f.write(str(int(high_score)))
             f.close()
             pygame.quit()
             sys.exit()
