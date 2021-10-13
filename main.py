@@ -78,7 +78,6 @@ def score_display(game_state):
         screen.blit(high_score_surface, high_score_rect)
 
 
-#pygame.mixer.pre_init(frequency=44100, size=16, channels=2, buffer=512)
 pygame.init()
 
 screen = pygame.display.set_mode((int(576 / 2), int(1024 / 2)))
